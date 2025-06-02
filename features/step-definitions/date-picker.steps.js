@@ -14,7 +14,7 @@ Given("I open the date picker page", { timeout: 20000 }, async () => {
     waitUntil: "domcontentloaded",
   });
 });
-
+//TODO remove locators to the PAGE OBJECT
 When("I select the date {string}", { timeout: 15000 }, async function (date) {
   const input = page.locator("#datePickerMonthYearInput");
   await input.waitFor({ state: "visible", timeout: 10000 });
@@ -24,7 +24,7 @@ When("I select the date {string}", { timeout: 15000 }, async function (date) {
   await input.press("Enter");
   await page.waitForTimeout(1000);
 });
-
+//TODO remove locators to the PAGE OBJECT
 Then(
   "the selected date should be {string}",
   { timeout: 10000 },

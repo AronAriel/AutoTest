@@ -1,6 +1,7 @@
 Feature: Tool Tips
 
   @tooltips
+    #TODO remove locators to the PAGE OBJECT
   Scenario: Check all tooltips
     Given I open the tool tips page
     Then the tooltip for "#toolTipButton" should be "You hovered over the Button"

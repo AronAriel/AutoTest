@@ -1,5 +1,5 @@
 Feature: Automation Practice Form
-
+#TODO How do you check random data filled on the form?
   @form
   Scenario: Fill mandatory fields and submit form successfully
     Given I open the automation practice form page

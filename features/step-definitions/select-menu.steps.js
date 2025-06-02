@@ -32,7 +32,8 @@ When(
     await selectMenu.selectFromMultiSelectDropDown(opts);
   }
 );
-
+//TODO do not hard code elements in the step
+// rewrite to the "Selected value in field {string} contain {value}" async(field, value) {
 Then("the selected values should be correct", async () => {
   const selectValue = await selectMenu.getSelectedSelectValue();
   expect(selectValue?.trim()).toBe("Group 2, option 1");

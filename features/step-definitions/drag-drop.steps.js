@@ -29,7 +29,7 @@ Given("I open the drag and drop page", { timeout: 40000 }, async () => {
 
   await page.waitForTimeout(2000);
 });
-
+//TODO remove locators to the PAGE OBJECT
 When(
   "I drag the source element to the target",
   { timeout: 30000 },

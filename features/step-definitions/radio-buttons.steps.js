@@ -13,7 +13,7 @@ Given("I open the radio button page", { timeout: 20000 }, async () => {
     waitUntil: "domcontentloaded",
   });
 });
-
+//TODO remove locators to the PAGE OBJECT
 When(
   "I select the {string} radio button",
   { timeout: 10000 },

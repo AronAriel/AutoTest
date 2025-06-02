@@ -176,3 +176,13 @@ Artifacts uploaded:
 ---
 
 © 2025 AutoTest Project 
+
+# Review 06 02
+
+* Remove all locators to the Page Object constructor
+* Create BasePage.js and crate repeatable steps Open web page by {string} url. And reuse for every page
+*  replace waitForTimeout with waitForSelector
+   Playwright automatically waits for elements to be ready before performing actions like click, fill, or type. For example:
+
+The element must be visible and enabled.
+The element must not be detached from the DOM.
