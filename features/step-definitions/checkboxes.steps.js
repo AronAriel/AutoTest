@@ -1,33 +1,28 @@
-const { Given, When, Then } = require("@cucumber/cucumber");
-const { chromium } = require("playwright");
-const { expect } = require("@playwright/test");
-const { launchPage } = require("../../utils/setupPage");
+const { Given, When, Then } = require('@cucumber/cucumber');
+const { expect } = require('@playwright/test');
+const { launchPage } = require('../../utils/setupPage');
+const { CheckboxPage } = require('../../pages/CheckboxPage');
+const { blockAds } = require('../../utils/adblock');
 
-let browser, page;
+let browser, page, checkboxPage;
 
-Given("I open the checkbox page", { timeout: 20000 }, async () => {
+Given('I open the checkbox page', { timeout: 20000 }, async () => {
   ({ browser, page } = await launchPage());
-  await page.goto("https://demoqa.com/checkbox", {
-    waitUntil: "domcontentloaded",
-  });
+  await blockAds(page);
+  checkboxPage = new CheckboxPage(page);
+  await checkboxPage.goto();
 });
 
-When("I expand all checkboxes", async () => {
-  await page.click('button[title="Expand all"]');
+When('I expand all checkboxes', async () => {
+  await checkboxPage.expandAll();
 });
 
-When("I check the {string} checkbox", { timeout: 10000 }, async (label) => {
-  const labelLocator = page.locator(`.rct-node >> text=${label}`);
-  await labelLocator.waitFor({ state: "visible", timeout: 10000 });
-  await labelLocator.click();
+When('I select the {string} checkbox', async (label) => {
+  await checkboxPage.selectCheckbox(label);
 });
 
-Then("{string} checkbox should be checked", async (label) => {
-  const checked = await page
-    .locator(`.rct-node >> text=${label}`)
-    .locator("..")
-    .locator(".rct-icon-check")
-    .isVisible();
-  expect(checked).toBe(true);
+Then('{string} checkbox should be checked', async (label) => {
+  const isChecked = await checkboxPage.isCheckboxChecked(label);
+  expect(isChecked).toBe(true);
   await browser.close();
 });

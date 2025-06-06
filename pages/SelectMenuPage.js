@@ -1,21 +1,25 @@
-class SelectMenuPage {
+const { BasePage } = require("./BasePage");
+
+class SelectMenuPage extends BasePage {
   constructor(page) {
+    super(page);
     this.page = page;
-    this.selectValueDropdown = page.locator("#withOptGroup");
-    this.selectValueMenu = page.locator(".css-26l3qy-menu");
-    this.selectOneDropdown = page.locator("#selectOne");
-    this.selectOneMenu = page.locator(".css-26l3qy-menu");
-    this.oldSelectMenuDropdown = page.locator("#oldSelectMenu");
-    this.carsDropdown = page.locator("#cars");
-    this.multiSelectInput = page.locator("#react-select-4-input");
-    this.multiSelectMenu = page.locator(".css-26l3qy-menu");
-    this.multiSelectValues = page.locator(
-      ".css-1rhbuit-multiValue .css-12jo7m5"
-    );
   }
 
+  selectValueDropdown = this.page.locator("#withOptGroup");
+  selectValueMenu = this.page.locator(".css-26l3qy-menu");
+  selectValueResult = this.page.locator("#withOptGroup [class*='singleValue']");
+  selectOneDropdown = this.page.locator("#selectOne");
+  selectOneMenu = this.page.locator(".css-26l3qy-menu");
+  selectOneResult = this.page.locator("#selectOne [class*='singleValue']");
+  oldSelectMenuDropdown = this.page.locator("#oldSelectMenu");
+  multiSelectInput = this.page.locator("#react-select-4-input");
+  multiSelectMenu = this.page.locator(".css-26l3qy-menu");
+  multiSelectValues = this.page.locator(".css-1rhbuit-multiValue .css-12jo7m5");
+  carsDropdown = this.page.locator("#cars");
+
   async goto() {
-    await this.page.goto("https://demoqa.com/select-menu");
+    await this.open("https://demoqa.com/select-menu");
   }
 
   async selectFromSelectValue(optionText) {
@@ -24,9 +28,7 @@ class SelectMenuPage {
   }
 
   async getSelectedSelectValue() {
-    return this.selectValueDropdown
-      .locator('[class*="singleValue"]')
-      .textContent();
+    return (await this.selectValueResult.textContent()).trim();
   }
 
   async selectFromSelectOne(optionText) {
@@ -35,21 +37,23 @@ class SelectMenuPage {
   }
 
   async getSelectedSelectOneValue() {
-    return this.selectOneDropdown
-      .locator('[class*="singleValue"]')
-      .textContent();
+    return (await this.selectOneResult.textContent()).trim();
   }
 
   async selectFromOldSelectMenuByText(optionText) {
     const value = await this.oldSelectMenuDropdown
       .locator("option", { hasText: optionText })
       .evaluate((option) => option.value);
+
     if (!value) throw new Error(`Option with text "${optionText}" not found`);
+
     await this.oldSelectMenuDropdown.selectOption(value);
   }
 
   async getSelectedOldSelectMenuValue() {
-    return this.oldSelectMenuDropdown.locator("option:checked").textContent();
+    return (
+      await this.oldSelectMenuDropdown.locator("option:checked").textContent()
+    ).trim();
   }
 
   async selectFromMultiSelectDropDown(options) {
@@ -65,11 +69,13 @@ class SelectMenuPage {
 
   async selectMultipleCars(options) {
     await this.carsDropdown.waitFor({ state: "visible" });
+
     for (const option of options) {
       await this.carsDropdown
         .locator(`option[value="${option}"]`)
         .waitFor({ state: "visible" });
     }
+
     await this.carsDropdown.selectOption(options);
   }
 

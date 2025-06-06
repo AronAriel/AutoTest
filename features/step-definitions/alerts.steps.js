@@ -23,12 +23,13 @@ Then("I should see an alert with message {string}", async (message) => {
     await dialog.accept();
   });
 
-  await page.waitForTimeout(500);
+  await page.waitForSelector("#alertButton", { state: "attached" });
   await browser.close();
 });
 
 When("I click the timer alert button", async () => {
   await alerts.clickTimerAlertButton();
+  await page.waitForSelector("#timerAlertButton", { state: "attached" });
 });
 
 When("I click the confirm button", async () => {
@@ -36,7 +37,7 @@ When("I click the confirm button", async () => {
     await dialog.accept();
   });
   await alerts.clickConfirmButton();
-  await page.waitForTimeout(500);
+  await page.waitForSelector("#confirmResult", { state: "visible" });
 });
 
 Then("the confirm result should be {string}", async (result) => {
@@ -50,7 +51,7 @@ When("I click the prompt button", async () => {
     await dialog.accept("Test User");
   });
   await alerts.clickPromptButton();
-  await page.waitForTimeout(500);
+  await page.waitForSelector("#promptResult", { state: "visible" });
 });
 
 Then("the prompt result should be {string}", async (result) => {
@@ -65,7 +66,7 @@ When("I accept the confirm alert", async () => {
   });
 
   await alerts.clickConfirmButton();
-  await page.waitForTimeout(500);
+  await page.waitForSelector("#confirmResult", { state: "visible" });
 });
 
 When("I enter {string} in the prompt alert", async (input) => {
@@ -74,5 +75,5 @@ When("I enter {string} in the prompt alert", async (input) => {
   });
 
   await alerts.clickPromptButton();
-  await page.waitForTimeout(500);
+  await page.waitForSelector("#promptResult", { state: "visible" });
 });
