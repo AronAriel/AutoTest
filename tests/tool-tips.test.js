@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { TooltipsPage } from "../pages/ToolTipsPage";
-import { blockAds } from '../utils/adblock.js';
+import { blockAds } from "../utils/adblock.js";
 
 test("Check all tooltips", async ({ page }) => {
   const tooltipsPage = new TooltipsPage(page);
@@ -8,27 +8,18 @@ test("Check all tooltips", async ({ page }) => {
   await tooltipsPage.goto();
 
   expect(
-    await tooltipsPage.hoverAndCheckTooltip(
-      "#toolTipButton",
-      "You hovered over the Button"
-    )
+    await tooltipsPage.hoverAndCheckTooltip("button", "You hovered over the Button")
   ).toBe(true);
+
   expect(
-    await tooltipsPage.hoverAndCheckTooltip(
-      "#toolTipTextField",
-      "You hovered over the text field"
-    )
+    await tooltipsPage.hoverAndCheckTooltip("textField", "You hovered over the text field")
   ).toBe(true);
+
   expect(
-    await tooltipsPage.hoverAndCheckTooltip(
-      "#texToolTopContainer a:nth-child(1)",
-      "You hovered over the Contrary"
-    )
+    await tooltipsPage.hoverAndCheckTooltip("contraryLink", "You hovered over the Contrary")
   ).toBe(true);
+
   expect(
-    await tooltipsPage.hoverAndCheckTooltip(
-      "#texToolTopContainer a:nth-child(2)",
-      "You hovered over the 1.10.32"
-    )
+    await tooltipsPage.hoverAndCheckTooltip("sectionLink", "You hovered over the 1.10.32")
   ).toBe(true);
 });
